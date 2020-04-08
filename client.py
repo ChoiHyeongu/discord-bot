@@ -1,11 +1,13 @@
 #-*- coding:utf-8 -*-
 import discord
 import asyncio
+import action
+import command as Command
+import config as Config
 import constant as Constant
-from command import Action, Command
 
 class Client(discord.Client):
-    action = Action()
+    action = action.Action()
 
     # 준비가 되면 로그를 찍음
     async def on_ready(self):
@@ -27,7 +29,7 @@ class Client(discord.Client):
             
     # 커맨드 확인하기
     def check_command(self, message):
-        if message.content.startswith(Constant.PREFIX_CHAR):
+        if message.content.startswith(Config.PREFIX_CHAR):
             return self.action.match_action(message.content) 
         elif message.content == Command.AGGRO.value:
             return self.action.aggro()
